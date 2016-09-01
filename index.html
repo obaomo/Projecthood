@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" Control="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stepehen Obaido: My Neighborhood Map</title>
+    <link rel="stylesheet" type="text/css" href="css/Hood_Projectstyle.CSS">
+    <script src="js/jquery-3.1.0.min.js"></script>
+    <script src="libs/knockout-3.4.0.min.js"></script>
+    <script src="js/projectmain.js"></script>
+    <script src="script/loader.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="options-box">
+        <h1>My Neighborhood Map</h1>
+      <div>
+          <input id="show-listings" type="button" value="Show Listings">
+          <input id="hide-listings" type="button" value="Hide Listings">
+          <hr>
+          <input id="toggle-drawing"  type="button" value="Tools Bar">
+        </div>
+        <hr>
+        <div>
+          <input id="zoom-to-area-text" type="text" placeholder="Enter destination!">
+          <input id="zoom-to-area" type="button" value="Zoom">
+        </div>
+        <hr>
+        <div>
+          <span class="text"> Within </span>
+          <select id="max-duration">
+            <option value="10">0 - 10 min</option>
+            <option value="15">15 min</option>
+            <option value="30">30 min</option>
+            <option value="60">1 hour</option>
+          </select>
+          <select id="mode">
+            <option value="DRIVING">drive</option>
+            <option value="WALKING">walk</option>
+            <option value="BICYCLING">bike</option>
+            <option value="WALK">jog/run</option>
+          </select>
+          <span class="text">of</span>
+          <input id="search-within-time-text" type="text" placeholder="e.g: Compare Supermarket, Providence, Deltona, FL">
+          <input id="search-within-time" type="button" value="Go">
+        </div>
+        <hr>
+      </div>
+      <div id="map"></div>
+    </div>
+    <script>
+    </script>
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMJREI9NZGQUi9kBNyniHZtfgP9aUWywk&libraries=places,geometry,drawing&callback=initMap"
+    ></script>
+  </body>
+</html>
