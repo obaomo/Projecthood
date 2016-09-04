@@ -6,7 +6,7 @@
       }
 
       .container {
-        height: 100%;
+        height: 100vw; /*makes container the full height of screen */
         position: relative;
       }
 
@@ -128,4 +128,5 @@
 
       #zoom-to-area {
         width: 24%;
-        color: #4d90fe;
+        color: #4d90fe; 
+   
