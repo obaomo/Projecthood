@@ -19,13 +19,15 @@
       </div>
         <hr>
         <ul data-bind="foreach: locations">
+          <div data-bind="if: isFiltered">
           <li data-bind="text: title"></li>
+          </div>
         </ul>
       </div>
       <div id="map"></div>
     </div>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMJREI9NZGQUi9kBNyniHZtfgP9aUWywk&libraries=places&callback=initMap"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMJREI9NZGQUi9kBNyniHZtfgP9aUWywk&libraries=places&callback=initMap" onerror="myerrorhandler()"
     ></script>
   </body>
 </html>
