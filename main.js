@@ -1,4 +1,9 @@
 var map;
+
+var myerrorhandler = function(){
+	 alert("Unable to connect to Google Maps.");
+}
+
 var markers = []; 
 
 function initMap() {
@@ -14,11 +19,6 @@ function initMap() {
     });
 
     var styles = [{
-        featureType: 'water',
-        stylers: [{
-            color: '#19a0d8'
-        }]
-    }, {
         featureType: 'administrative',
         elementType: 'labels.text.stroke',
         stylers: [{
@@ -53,34 +53,6 @@ function initMap() {
         stylers: [{
             visibility: 'off'
         }]
-    }, {
-        featureType: 'water',
-        elementType: 'labels.text.stroke',
-        stylers: [{
-            lightness: 100
-        }]
-    }, {
-        featureType: 'water',
-        elementType: 'labels.text.fill',
-        stylers: [{
-            lightness: -100
-        }]
-    }, {
-        featureType: 'poi',
-        elementType: 'geometry',
-        stylers: [{
-            visibility: 'on'
-        }, {
-            color: '#f0e4d3'
-        }]
-    }, {
-        featureType: 'road.highway',
-        elementType: 'geometry.fill',
-        stylers: [{
-            color: '#efe9e4'
-        }, {
-            lightness: -25
-        }]
     }];
     
     var locations = [{
@@ -88,36 +60,42 @@ function initMap() {
         location: {
             lat: 28.9288298,
             lng: -81.2354897
+            isFiltered: ko.observable(true)
         }
     }, {
         title: 'RaceTrac',
         location: {
             lat: 28.9478792,
             lng: -81.2517882
+           isFiltered: ko.observable(true) 
         }
     }, {
         title: 'Dunkin Donuts',
         location: {
             lat: 28.9336987,
             lng: -81.2521422
+            isFiltered: ko.observable(true)
         }
     }, {
         title: 'Epic Theatre',
         location: {
             lat: 28.9336987,
             lng: -81.2521422
+           isFiltered: ko.observable(true) 
         }
     }, {
         title: 'Deltona Gulf-Club',
         location: {
             lat: 28.9227577,
             lng: -81.2444269
+            isFiltered: ko.observable(true)
         }
     }, {
         title: 'Deltona Library',
         location: {
             lat: 28.9277695,
             lng: -81.231004
+            isFiltered: ko.observable(true)
         }
     }];
 
@@ -149,6 +127,21 @@ function initMap() {
         });
     }
 
+     filterItems: function () {
+        var filter = viewModel.searchQuery().toLowerCase();
+
+        for (var i = 0; i < model.locations.length; i++) {
+
+            var searchedTitle = model.locations[i].title().toLowerCase();
+
+            if (searchedTitle.indexOf(filter) > -1) {
+                model.locations[i].isFiltered(true);
+                model.locations[i].marker.setMap(map);
+            }
+            else {
+                model.locations[i].isFiltered(false);
+                model.locations[i].marker.setMap(null);
+            }
     document.getElementById('show-listings').addEventListener('click',
         showListings);
     document.getElementById('hide-listings').addEventListener('click', function() {
@@ -193,7 +186,11 @@ function initMap() {
             infowindow.open(map, marker);
         }
     }
-
+     toggleBounce: function (location) {
+        viewModel.disableMarkers();
+        location.marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+    
     function showListings() {
         var bounds = new google.maps.LatLngBounds();
         for (var i = 0; i < markers.length; i++) {
