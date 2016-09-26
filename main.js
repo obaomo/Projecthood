@@ -1,5 +1,4 @@
 var map;
-var map;
 var infowindow;
 var mapBounds;
 var myViewModel;
@@ -110,7 +109,7 @@ function initmap() {
 // Location constructor function
 var Location = function (data, map, markers, infowindow) {
 	var self = this;
-	var myLatLong = data.pos;
+	var myLatLong = data.pos; 
 	this.locations = ko.observableArray([]);
 	this.title = data.title;
 	this.content = '<div>' + self.title + '</div>';
@@ -163,19 +162,20 @@ var ViewModel = function() {
         location.toggleBounce();
     };
 
-    self.filteredList = ko.computed(function(){
+    this.filteredList = ko.computed(function(){
         var filtered = [];
-        this.Location().forEach(function(Location){
+        this.locations.forEach(function(location){
             if (location.visible === true) {
                 filtered.push(location);
             }
         });
         return filtered;
     });
-	this.activateMarker = function(clickedLocation) {
-		var marker = clickedLocation.marker;
-		google.maps.event.trigger(marker, 'click');
-);
+
+   this.activateMarker = function(clickedLocation) {
+    	var marker = clickedLocation.marker;
+    	google.maps.event.trigger(marker, 'click');
+    };
 
 	this.remove = function () {
 		this.locations.removeEach(this.selectItem());
