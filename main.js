@@ -171,10 +171,14 @@ var ViewModel = function() {
             }
         });
         return filtered;
-    }, this);
-};
+    });
+	this.activateMarker = function(clickedLocation) {
+		var marker = clickedLocation.marker;
+		google.maps.event.trigger(marker, 'click');
+);
 
 	this.remove = function () {
 		this.locations.removeEach(this.selectItem());
 		this.selectItem([]);
 	};
+};
