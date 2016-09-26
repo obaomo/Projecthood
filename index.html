@@ -14,7 +14,7 @@
     <div class="option-box">
             <input type="search" data-bind="foreach:Location" placeholder="Location" type="search"></input>
                 <ul data-bind="foreach: Location">
-                <li class="list" data-bind="text: title, click: $parent.selectItem"></li>
+                <li class="list" data-bind="text: title, click: $root.activateMarker"></li>
                 </ul>
             <button data-bind="click: Location">Remove</button>  
     </div>
