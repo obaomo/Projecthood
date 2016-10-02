@@ -37,16 +37,16 @@ var myPlaces = [{
         , lng: -81.2444269
     }
 }, {
-    title: 'Deltona Libaray'
+    title: 'Deltona Library'
     , pos: {
         lat: 28.9277695
         , lng: -81.231004
     }
 }];
 
-(function(){
-
-})();
+//(function(){
+//
+//})();
 
 //main callback function for google map API 
 function initmap() {
@@ -105,9 +105,8 @@ var filterText = ko.observable("");
 var Place = function (data, map, marker, infowindow) {
     var self = this;
     var myLatLong = data.pos;
-//    this.filter = ko.observable();
     this.wikiArtcle = '';
-    this.marker = ko.observable(marker);
+    this.marker = marker;
     this.locations = ko.observableArray([]);
     this.title = ko.observable(data.title);
     this.content = '<div>' + self.title + '</div>';
@@ -121,10 +120,6 @@ var Place = function (data, map, marker, infowindow) {
     });
 
 
-//    this.addMarker = function (place) {
-//        this.markers.push(marker);
-//    }
-
     this.visible = ko.computed(function () {
         if (filterText().length > 0) {
             return (self.title().toLowerCase().indexOf(filterText().toLowerCase()) > -1);
@@ -133,22 +128,28 @@ var Place = function (data, map, marker, infowindow) {
         }
     }, this);
 
-//    $.ajax({
-//  url: url,
-//  method: 'GET',
-// }).done(function(result) {
- // console.log(result);
-// }).fail(function(err) {
-//  throw err;
-// });
-
+    this.toggleMarker = ko.computed(function() {
+        //console.log(self.visible());
+        self.marker.setVisisble(self.visible());
+    });
+    
     //use wikipedia to get info on place
    $.ajax({
-        url: wikiURL + self.searchWiki
+        url: wikiURL + wikiQuery,
         , dataType: 'jsonp'
         , timeout: 1000
     }).done(function (data) {
-        self.content = '<div>' + self.title() + '</div>' + '<p>' + data[2][0] + '<a href=' + data[3][0] + ' target="blank"> Wikipedia</a></p>';
+       //console.log(data);
+       var description = data[2][0],
+           url = data[3][0];
+       wikiEntryUrl = 'https://en.wikipedia.org/wiki/Wikipedia:Your_first_article';
+       
+       if (description) {
+                self.content = '<div class="info-window"><div>' + self.title() + '</div>' + '<p>' + description + '<a href=' + url + ' target="blank"> Wikipedia</a></p></div>';
+       } else {
+                self.content = '<div class="info-window"><div>' + self.title() + '</div>' + '<p>' No Wikipedia Entry found. Be the first one to add it:<br><br><a href=' + wikiEntryUrl + ' target="blank">Click here to add a Wikipedia Article</a></p></div>';
+       }
+       
     }).fail(function (jqXHR, textStatus) {
         alert("failed to get wikipedia resources");
     });
@@ -166,7 +167,7 @@ var Place = function (data, map, marker, infowindow) {
     };
 
     this.marker.addListener('click', this.toggleBounce);
-};
+};// ending the place constructor
 
 //list of used identify for my view
 var ViewModel = function () {
@@ -205,7 +206,7 @@ var ViewModel = function () {
             }
         });
         return filtered;
-    }, this);
+    });
 };
 
 
