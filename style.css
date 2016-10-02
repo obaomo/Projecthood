@@ -1,132 +1,56 @@
-   body {
-        font-family: Arial, sans-serif;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+  @media screen and (min-width: :350px) 
+html,
+body {
+    margin: 0px;
+    max-width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    font-family: sans-serif;
+}
 
-      .container {
-        height: 100vw; /*makes container the full height of screen */
-        position: relative;
-      }
+h1 {
+	text-align: center;
+	font-size: 22px;
+}
 
-      input {
-        font-size: 12px;
-      }
+#map {
+    width: 100%;
+    height: 500px;
+    margin: auto;
+}
 
-      h1 {
-        color: #4d90fe;
-        font-size: 22px;
-        margin: 0 0 10px 0;
-        text-align: center;
-      }
+hr {
+    color: #4d90fe;
+}
 
-      #hide-listings,
-      #show-listings {
-        width: 48%;
-        color: #fff;
-        background-color: #4d90fe;
-        padding: 5px 11px 0px 11px;
-      }
+.info-window {
+   max-width: 200px;
+}
 
-      hr {
-        background: #D0D7D9;
-        height: 1px;
-        margin: 20px 0 20px 0;
-        border: none;
-      }
+#data-bind {
+    width: 100%;
+    color: #4d90fe;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
+}
 
-      #map {
-        bottom:0px;
-        height: 100%;
-        left: 362px;
-        position: absolute;
-        right: 0px;
-      }
+.alllocation {
+    position: absolute; /*Works best when absolutely positioned or floated*/
+    width: 0px; 
+    transition: all 0.15s;
+    right: 0;
+    top: 50px;
+    background-color: white;
+    margin: 0;
+}
 
-      .options-box {
-        background: #fff;
-        border: 1px solid #999;
-        border-radius: 3px;
-        height: 100%;
-        line-height: 35px;
-        padding: 10px 10px 30px 10px;
-        text-align: left;
-        width: 340px;
-      }
+.filteredlist{
+    float:left;
+    min-width:100px;
+    padding:0;
+    margin: 0;
+}
 
-      .controls {
-        margin-top: 10px;
-        border: 1px solid transparent;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        height: 32px;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      }
-
-      #pac-input {
-        background-color: #fff;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        margin-left: 12px;
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        width: 300px;
-      }
-
-      #pac-input:focus {
-        border-color: #4d90fe;
-      }
-
-      .pac-container {
-        font-family: Roboto;
-      }
-
-      #type-selector {
-        color: #fff;
-        background-color: #4d90fe;
-        padding: 5px 11px 0px 11px;
-      }
-
-      #type-selector label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-      }
-
-      #pano {
-        width: 200px;
-        height: 200px;
-      }
-
-      #places-search,
-      #search-within-time-text {
-        width: 84%;
-      }
-
-      .text {
-        font-size: 12px;
-      }
-
-      #toggle-drawing {
-        width: 27%;
-        color: #4d90fe;
-        position: relative;
-        margin-left: 10px;
-      }
-
-      #zoom-to-area-text {
-        width: 70%;
-      }
-
-      #search-within-time {
-        color: #4d90fe;
-      }
-
-      #zoom-to-area {
-        width: 24%;
-        color: #4d90fe; 
-   
+.search {
+	max-width: 120px;
+}
