@@ -7,40 +7,40 @@ var wikiURL = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&
 
 //main code data for location
 var myPlaces = [{
-    title: 'Stephen Home'
-    , pos: {
-        lat: 28.9288298
-        , lng: -81.2354897
+    title: 'Stephen Home',
+    pos: {
+        lat: 28.9288298,
+        lng: -81.2354897
     }
 }, {
-    title: 'RaceTrac'
-    , pos: {
-        lat: 28.9478792
-        , lng: -81.2517882
+    title: 'RaceTrac',
+    pos: {
+        lat: 28.9478792,
+        lng: -81.2517882
     }
 }, {
-    title: 'Dunkin Donuts'
-    , pos: {
-        lat: 28.9440047
-        , lng: -81.2440784
+    title: 'Dunkin Donuts',
+    pos: {
+        lat: 28.9440047,
+        lng: -81.2440784
     }
 }, {
-    title: 'Epic Theatre'
-    , pos: {
-        lat: 28.9336987
-        , lng: -81.2521422
+    title: 'Epic Theatre',
+    pos: {
+        lat: 28.9336987,
+        lng: -81.2521422
     }
 }, {
-    title: 'Deltona Gulf Club'
-    , pos: {
-        lat: 28.9227577
-        , lng: -81.2444269
+    title: 'Deltona Gulf Club',
+    pos: {
+    	lat: 28.9227577,
+    	lng: -81.2444269
     }
 }, {
-    title: 'Deltona Library'
-    , pos: {
-        lat: 28.9277695
-        , lng: -81.231004
+    title: 'Deltona Library',
+    pos: {
+        lat: 28.9277695,
+        lng: -81.231004
     }
 }];
 
@@ -105,6 +105,7 @@ var filterText = ko.observable("");
 var Place = function (data, map, marker, infowindow) {
     var self = this;
     var myLatLong = data.pos;
+    var wikiQuery = data.title;
     this.wikiArtcle = '';
     this.marker = marker;
     this.locations = ko.observableArray([]);
@@ -119,41 +120,39 @@ var Place = function (data, map, marker, infowindow) {
         , title: this.title()
     });
 
-
     this.visible = ko.computed(function () {
         if (filterText().length > 0) {
             return (self.title().toLowerCase().indexOf(filterText().toLowerCase()) > -1);
         } else {
             return true;
         }
-    }, this);
-
-    this.toggleMarker = ko.computed(function() {
-        //console.log(self.visible());
-        self.marker.setVisisble(self.visible());
     });
-    
-    //use wikipedia to get info on place
+
+    this.toggleMarker = ko.computed(function(){
+    	//console.log(self.visible());
+    	self.marker.setVisible(self.visible());
+    });
+
+   //use wikipedia to get info on place
    $.ajax({
         url: wikiURL + wikiQuery,
-        , dataType: 'jsonp'
-        , timeout: 1000
+        dataType: 'jsonp',
+        timeout: 1000
     }).done(function (data) {
-       //console.log(data);
-       var description = data[2][0],
-           url = data[3][0];
-       wikiEntryUrl = 'https://en.wikipedia.org/wiki/Wikipedia:Your_first_article';
-       
-       if (description) {
-                self.content = '<div class="info-window"><div>' + self.title() + '</div>' + '<p>' + description + '<a href=' + url + ' target="blank"> Wikipedia</a></p></div>';
-       } else {
-                self.content = '<div class="info-window"><div>' + self.title() + '</div>' + '<p>' No Wikipedia Entry found. Be the first one to add it:<br><br><a href=' + wikiEntryUrl + ' target="blank">Click here to add a Wikipedia Article</a></p></div>';
-       }
-       
-    }).fail(function (jqXHR, textStatus) {
-        alert("failed to get wikipedia resources");
-    });
+    	//console.log(data);
+    	var description = data[2][0],
+    		url = data[3][0];
+    		wikiEntryUrl = 'https://en.wikipedia.org/wiki/Wikipedia:Your_first_article';
 
+    		if (description) {
+    			self.content = '<div class="info-window"><div>' + self.title() + '</div>' + '<p>' + description + '<a href=' + url + ' target="blank"> Wikipedia</a></p></div';
+    		} else {
+    			self.content = '<div class="info-window"><div>' + self.title() + '</div>' + '<p> No Wikipedia Entry found. Be the first one to add it:<br><br><a href=' + wikiEntryUrl + ' target="blank">Click here to add a Wikipedia Article</a></p></div>';
+    		}
+
+    }).fail(function (jqXHR, textStatus) {
+        alert.log("failed to get wikipedia resources");
+    });
 
     this.toggleBounce = function () {
         if (self.marker.getAnimation() !== null) {
@@ -167,7 +166,7 @@ var Place = function (data, map, marker, infowindow) {
     };
 
     this.marker.addListener('click', this.toggleBounce);
-};// ending the place constructor
+}; // end Place constructor
 
 //list of used identify for my view
 var ViewModel = function () {
@@ -200,7 +199,7 @@ var ViewModel = function () {
 
     self.filteredItems = ko.computed(function () {
         var filtered = [];
-        this.placesList().forEach(function (place) {
+        self.placesList().forEach(function (place) {
             if (place.visible()) {
                 filtered.push(place);
             }
@@ -208,8 +207,6 @@ var ViewModel = function () {
         return filtered;
     });
 };
-
-
 
 function googleError() {
     // error handling here
