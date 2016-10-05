@@ -5,6 +5,7 @@ var markers = [];
 var styles;
 var wikiURL = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&callback=wikiCallBack&search=';
 
+
 //main code data for location
 var myPlaces = [{
     title: 'Stephen Home',
@@ -31,67 +32,66 @@ var myPlaces = [{
         lng: -81.2521422
     }
 }, {
-    title: 'Deltona Gulf Club',
+    title: 'Deltona High School',
     pos: {
-    	lat: 28.9227577,
-    	lng: -81.2444269
+        lat: 28.9414073,
+        lng: -81.2517576
     }
 }, {
-    title: 'Deltona Library',
+    title: 'YMCA',
     pos: {
-        lat: 28.9277695,
-        lng: -81.231004
+        lat: 28.895785,
+        lng: -81.258914
     }
 }];
 
-//(function(){
-//
-//})();
 
 //main callback function for google map API 
+"use strcit";
 function initmap() {
 
     var style = [{
-        "featureType": "administrative"
-        , "elementType": "labels.text.fill"
-        , "styles": [{
+        "featureType": "administrative",
+         "elementType": "labels.text.fill",
+         "styles": [{
             "color": "#444444"
         }]
     }, {
-        "featureType": "landscape"
-        , "elementType": "all"
-        , "styles": [{
+        "featureType": "landscape",
+         "elementType": "all",
+         "styles": [{
             "color": "#f2f2f2"
         }]
     }, {
-        "featureType": "poi"
-        , "elementType": "all"
-        , "styles": [{
+        "featureType": "poi",
+         "elementType": "all",
+         "styles": [{
             "visibility": "off"
         }]
     }, {
-        "featureType": "road.highway"
-        , "elementType": "all"
-        , "styles": [{
+        "featureType": "road.highway",
+         "elementType": "all",
+         "styles": [{
             "visibility": "simplified"
         }]
     }, {
-        "featureType": "road.arterial"
-        , "elementType": "labels.icon"
-        , "styles": [{
+        "featureType": "road.arterial",
+         "elementType": "labels.icon",
+         "styles": [{
             "visibility": "off"
         }]
     }];
 
+    
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
-            lat: 28.9288298
-            , lng: -81.2354897
-        }
-        , zoom: 13
-        , styles: styles
-        , mapTypeControl: null
-    , });
+            lat: 28.9288298,
+            lng: -81.2354897
+        },
+        zoom: 13,
+        styles: styles,
+        mapTypeControl: null,
+    });
 
 
     myViewModel = new ViewModel();
@@ -113,11 +113,11 @@ var Place = function (data, map, marker, infowindow) {
     this.content = '<div>' + self.title + '</div>';
 
     this.marker = new google.maps.Marker({
-        map: map
-        , draggable: true
-        , animation: google.maps.Animation.DROP
-        , position: myLatLong
-        , title: this.title()
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        position: myLatLong,
+        title: this.title()
     });
 
     this.visible = ko.computed(function () {
@@ -129,31 +129,31 @@ var Place = function (data, map, marker, infowindow) {
     });
 
     this.toggleMarker = ko.computed(function(){
-    	//console.log(self.visible());
-    	self.marker.setVisible(self.visible());
+        //console.log(self.visible());
+        self.marker.setVisible(self.visible());
     });
 
    //use wikipedia to get info on place
    $.ajax({
         url: wikiURL + wikiQuery,
         dataType: 'jsonp',
-        timeout: 1000
     }).done(function (data) {
-    	//console.log(data);
-    	var description = data[2][0],
-    		url = data[3][0];
-    		wikiEntryUrl = 'https://en.wikipedia.org/wiki/Wikipedia:Your_first_article';
+        //console.log(data);
+        var description = data[2][0],
+            url = data[3][0];
+            wikiEntryUrl = 'https://en.wikipedia.org/wiki/Wikipedia:Your_first_article';
 
-    		if (description) {
-    			self.content = '<div class="info-window"><div>' + self.title() + '</div>' + '<p>' + description + '<a href=' + url + ' target="blank"> Wikipedia</a></p></div';
-    		} else {
-    			self.content = '<div class="info-window"><div>' + self.title() + '</div>' + '<p> No Wikipedia Entry found. Be the first one to add it:<br><br><a href=' + wikiEntryUrl + ' target="blank">Click here to add a Wikipedia Article</a></p></div>';
-    		}
+            if (description) {
+                self.content = '<div class="info-window"><div>' + self.title() + '</div>' + '<p>' + description + '<a href=' + url + ' target="blank"> Wikipedia</a></p></div';
+            } else {
+                self.content = '<div class="info-window"><div>' + self.title() + '</div>' + '<p> No Wikipedia Entry found. Be the first one to add it:<br><br><a href=' + wikiEntryUrl + ' target="blank">Click here to add a Wikipedia Article</a></p></div>';
+            }
 
     }).fail(function (jqXHR, textStatus) {
-        alert.log("failed to get wikipedia resources");
+        alert("failed to get wikipedia resources");
     });
 
+    //allow the marker to bounce when click upon
     this.toggleBounce = function () {
         if (self.marker.getAnimation() !== null) {
             self.marker.setAnimation(null);
@@ -161,7 +161,7 @@ var Place = function (data, map, marker, infowindow) {
             self.marker.setAnimation(google.maps.Animation.BOUNCE);
             setTimeout(function () {
                 self.marker.setAnimation(null);
-            }, 2000);
+            }, 1400);
         }
     };
 
@@ -170,26 +170,23 @@ var Place = function (data, map, marker, infowindow) {
 
 //list of used identify for my view
 var ViewModel = function () {
+    "use strict";
     var self = this;
     this.map = new google.maps.Map(document.getElementById('map'), {
         center: {
-            lat: 28.9288298
-            , lng: -81.2354897
-        }
-        , zoom: 13
+            lat: 28.9288298,
+            lng: -81.2354897
+        },
+        zoom: 13
     });
 
+    // show up the list view marker
     this.placesList = ko.observableArray([]);
-      myPlaces.forEach(function (placeItem) {
-      self.placesList.push(new Place(placeItem, self.map));
+        myPlaces.forEach(function (placeItem) {
+        self.placesList.push(new Place(placeItem, self.map));
     });
 
-    this.placesList().forEach(function (place) {
-        google.maps.event.addListener(place.marker, 'click', function () {
-            self.clickPlace(place);
-        });
-    });
-
+    //The infowindow been activated when marker is click on
     var infowindow = new google.maps.InfoWindow();
     this.clickPlace = function (place) {
         infowindow.setContent(place.content);
@@ -197,6 +194,14 @@ var ViewModel = function () {
         place.toggleBounce();
     };
 
+    //activate the event listener when the marker is click
+    this.placesList().forEach(function (place) {
+        google.maps.event.addListener(place.marker, 'click', function () {
+            self.clickPlace(place);
+        });
+    });
+
+    //activate the search list 
     self.filteredItems = ko.computed(function () {
         var filtered = [];
         self.placesList().forEach(function (place) {
@@ -208,7 +213,8 @@ var ViewModel = function () {
     });
 };
 
+// error handler
 function googleError() {
-    // error handling here
+    "use strict";
     alert("failed to get google map resources");
 }
