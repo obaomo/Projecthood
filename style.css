@@ -1,4 +1,3 @@
-  @media screen and (min-width: :350px) 
 html,
 body {
     margin: 0px;
@@ -13,10 +12,26 @@ h1 {
 	font-size: 22px;
 }
 
-#map {
+.map-canvas {
     width: 100%;
     height: 500px;
     margin: auto;
+    position: center;
+}
+
+#option-box {
+    background-color: #EEEEDD;
+    border: 1px solid#CCC;
+    max-width: 350PX;
+}
+
+.search {    
+    color: blue;
+    padding: 5px;
+}
+
+#place-list {
+    color: blue;
 }
 
 hr {
@@ -34,23 +49,7 @@ hr {
     padding: 5px 11px 0px 11px;
 }
 
-.alllocation {
-    position: absolute; /*Works best when absolutely positioned or floated*/
-    width: 0px; 
-    transition: all 0.15s;
-    right: 0;
-    top: 50px;
-    background-color: white;
-    margin: 0;
-}
-
-.filteredlist{
-    float:left;
-    min-width:100px;
-    padding:0;
-    margin: 0;
-}
-
-.search {
-	max-width: 120px;
+@media screen and (min-width: :350px) {
+    #map{
+        width: 350px;
 }
