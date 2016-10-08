@@ -10,6 +10,9 @@ body {
 h1 {
 	text-align: center;
 	font-size: 22px;
+	display: block;
+    	background-color: green;
+   	 margin-bottom: 1px: 
 }
 
 .map-canvas {
@@ -28,10 +31,19 @@ h1 {
 .search {    
     color: blue;
     padding: 5px;
+    background-color: blue;
 }
 
 #place-list {
     color: blue;
+    background-color: green;
+    display: block;
+}
+
+#place-list:hover, active {
+    background-color: red;
+    color: purple;
+    cursor: pointer;
 }
 
 hr {
