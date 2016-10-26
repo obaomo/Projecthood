@@ -22,8 +22,8 @@ var myPlaces = [{
 }, {
     title: 'Dunkin Donuts',
     pos: {
-        lat: 28.9440047,
-        lng: -81.2440784
+        lat: 28.9482,
+        lng: -81.2429
     }
 }, {
     title: 'Epic Theatre',
@@ -40,8 +40,8 @@ var myPlaces = [{
 }, {
     title: 'YMCA',
     pos: {
-        lat: 28.895785,
-        lng: -81.258914
+        lat: 28.9404,
+        lng: -81.2459
     }
 }];
 
@@ -217,4 +217,4 @@ var ViewModel = function () {
 function googleError() {
     "use strict";
     alert("failed to get google map resources");
-}
+} 
